@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="20dp"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@mipmap/bgm"
+
+    tools:context="com.loljayang.lrbg.Main2Activity">
+
+
+    <ImageView
+        android:id="@+id/sspell2"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+
+        android:layout_below="@+id/icon7"
+        android:layout_alignStart="@+id/adView"
+        android:layout_marginTop="14dp" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id">
+    </com.google.android.gms.ads.AdView>
+
+    <ImageView
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:id="@+id/banner2"
+        android:src="@android:color/black"
+        android:layout_marginTop="39dp"
+        android:layout_below="@+id/sspell2"
+        android:layout_alignParentStart="true" />
+    <ImageView
+        android:id="@+id/bootsview"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
+
+        android:layout_alignTop="@+id/banner2"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:id="@+id/icon2"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
+
+
+        android:layout_alignTop="@+id/banner2"
+        android:layout_toEndOf="@+id/bootsview" />
+
+    <ImageView
+        android:layout_height="60dp"
+        android:id="@+id/icon3"
+        android:layout_width="60dp"
+        android:layout_alignTop="@+id/banner2"
+        android:layout_toEndOf="@+id/icon2" />
+
+    <ImageView
+        android:layout_height="60dp"
+        android:id="@+id/icon4"
+        android:layout_width="60dp"
+        android:layout_alignTop="@+id/banner2"
+        android:layout_toEndOf="@+id/icon3" />
+
+
+
+    <ImageView
+        android:layout_width="100dp"
+        android:id="@+id/icon7"
+        android:layout_height="100dp"
+        android:alpha=".85"
+        android:layout_marginTop="28dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_height="60dp"
+        android:id="@+id/icon5"
+        android:layout_alignTop="@+id/bootsview"
+        android:layout_toEndOf="@+id/icon4"
+        android:layout_centerInParent="true"
+        android:layout_width="60dp" />
+    <ImageView
+        android:id="@+id/icon6"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignTop="@+id/banner2"
+        android:layout_alignParentEnd="true" />
+
+
+
+    <CheckBox
+        android:text="Jungler"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox"
+        tools:buttonTint="@android:color/holo_green_light"
+        android:background="@android:color/transparent"
+        android:foregroundTint="@android:color/holo_blue_bright"
+        android:foreground="@android:color/transparent"
+        android:layout_below="@+id/banner2"
+        android:layout_alignStart="@id/banner2"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content" />
+
+
+
+    <Button
+
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/gobuttonxml"
+        android:id="@+id/button"
+        android:layout_alignTop="@+id/checkBox"
+        android:layout_alignEnd="@+id/banner2" />
+
+    <Spinner
+        android:layout_height="35dp"
+        android:spinnerMode="dropdown"
+        android:id="@+id/champdrop"
+        android:layout_width="160dp"
+        android:layout_alignBottom="@+id/checkBox"
+        android:layout_alignStart="@id/icon3"
+        android:layout_toEndOf="@+id/checkBox"
+         />
+
+    <ImageView
+        android:id="@+id/keystone"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_alignBottom="@+id/sspell2"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/sspell1"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+
+        android:layout_alignBottom="@+id/keystone"
+        android:layout_alignEnd="@+id/adView" />
+
+
+</RelativeLayout>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1083332754990",
+    "firebase_url": "https://lrbg-lol-random.firebaseio.com",
+    "project_id": "lrbg-lol-random",
+    "storage_bucket": "lrbg-lol-random.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083332754990:android:eb0abbefe1adad5f",
+        "android_client_info": {
+          "package_name": "com.loljayang.lrbg2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083332754990-5cgcridruahpuf8pt2ula3knecbihu73.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwRstSChb33_4Hdxa-OyGTfvksTIuLd2A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
