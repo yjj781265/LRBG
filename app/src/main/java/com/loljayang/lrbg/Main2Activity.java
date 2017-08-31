@@ -74,12 +74,11 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        if(isNetworkAvailable()) {
+        if (isNetworkAvailable()) {
             AdView mAdView = (AdView) findViewById(R.id.adView);
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);
         }
-
 
 
         rift.start();
@@ -136,10 +135,10 @@ public class Main2Activity extends AppCompatActivity {
         view8.getLayoutParams().height = (int) bannerHeight;
         keyStoneView.getLayoutParams().height = (int) keyH;
         keyStoneView.getLayoutParams().width = (int) keyW;
-        sspell1View.getLayoutParams().width = (int)sspellsize;
-        sspell1View.getLayoutParams().height = (int)sspellsize;
-        sspell2View.getLayoutParams().width = (int)sspellsize;
-        sspell2View.getLayoutParams().height = (int)sspellsize;
+        sspell1View.getLayoutParams().width = (int) sspellsize;
+        sspell1View.getLayoutParams().height = (int) sspellsize;
+        sspell2View.getLayoutParams().width = (int) sspellsize;
+        sspell2View.getLayoutParams().height = (int) sspellsize;
 //set view source pics
         view1.setBackgroundResource(R.drawable.qmark1);
         view2.setBackgroundResource(R.drawable.qmark1);
@@ -159,620 +158,629 @@ public class Main2Activity extends AppCompatActivity {
         new myAsyntask().execute();
 
         myadapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, DropList);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
 
 
-        jgbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) { // checkbox
-                if (isChecked) {
-                    checked = true;
-                } else {
-                    checked = false;
-                }
-            }
-        });
 
 
-        generate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                rift.stop();
-                rift = MediaPlayer.create(Main2Activity.this, R.raw.rift);
-                Collections.shuffle(champList);
-                Collections.shuffle(KeyStoneList);
-                Collections.shuffle(SpellList);
-                ;
-
-                splash.play(splashID, 1, 1, 1, 0, 1);
-                String champStr = champdrop.getSelectedItem().toString();
-                AnimationDrawable champAnimation = new AnimationDrawable();
-                champAnimation.setOneShot(true);
-                AnimationDrawable keyStoneAnimation = new AnimationDrawable();
-                keyStoneAnimation.setOneShot(true);
-
-                AnimationDrawable spell1Animation = new AnimationDrawable();
-                spell1Animation.setOneShot(true);
-                AnimationDrawable spell2Animation = new AnimationDrawable();
-                spell2Animation.setOneShot(true);
-
-
-                if (champStr.equals("Random")) {
-                    index = 9;
-
-                    for (int d = 0; d < 10; d++) {
-                        champAnimation.addFrame(getResources().getDrawable
-                                (champList.get(d).champIcon), 50);
-                    }  // champion icon anime
-                } else {
-                    for (int i = 0; i < champList.size(); i++) {
-                        if (champList.get(i).name.equals(champStr)) {
-                            index = i;
-
-                            champAnimation.addFrame(getResources().getDrawable
-                                    (champList.get(index).champIcon), 50);
-
-                        }
+            jgbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) { // checkbox
+                    if (isChecked) {
+                        checked = true;
+                    } else {
+                        checked = false;
                     }
                 }
-                //keystone Animation
-                for (int i = 0; i < KeyStoneList.size(); i++) {
-                    keyStoneAnimation.addFrame(getResources().getDrawable(KeyStoneList.get(i).
-                            getKeyStone()), 100);
-                }
-
-                //spell 1+2 animation
-               Spell spelltemp =null , spelltemp2=null  ;
-                if(checked){
-                    spell1Animation.addFrame(getResources().getDrawable(R.drawable.smite), 150);
-                    spelltemp = new Spell (R.drawable.smite,"Smite");
-                    for(int i = 0; i<SpellList.size() ;i++){
-                        if(SpellList.get(i).getSpell()!= R.drawable.smite) {
-                            spell2Animation.addFrame(getResources().getDrawable(SpellList.get(i).getSpell()), 250);
-                            spelltemp2 = SpellList.get(i);
-                        }
-                    }
-
-                }else{
-
-                    for(int i = 0; i<SpellList.size();i++) {
-                        if(SpellList.get(i).getSpell()!= R.drawable.smite){
-                            spell2Animation.addFrame(getResources().getDrawable(SpellList.get(i).getSpell()), 150);
-                            spelltemp2 = SpellList.get(i);
-                        }
-                    }
-
-                    for(int i = 0; i<SpellList.size();i++){
-                        if(SpellList.get(i)!= spelltemp2
-                                && (SpellList.get(i).getSpell()!= R.drawable.smite)) {
-                            spell1Animation.addFrame(getResources().getDrawable(SpellList.get(i).getSpell()), 250);
-                            spelltemp = SpellList.get(i);
-                        }
-                    }
-
-                }
-
-                final Spell spell1 = spelltemp;
-                final Spell spell2 = spelltemp2;
-
-                Champ champ = new Champ(champList.get(index).champIcon, champList.get(index)
-                        .champSound, champList.get(index).name, champList.get(index).role);
+            });
 
 
-                final Champ temp = champ;
+            generate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-
-                champSD = MediaPlayer.create(Main2Activity.this, champ.champSound);
-                if (MainActivity.toggle.isChecked()) {
-                    champSD.setVolume(0, 0);
+                    rift.stop();
+                    rift = MediaPlayer.create(Main2Activity.this, R.raw.rift);
+                    Collections.shuffle(champList);
+                    Collections.shuffle(KeyStoneList);
+                    Collections.shuffle(SpellList);
                     ;
-                } else {
-                    champSD.setVolume(1, 1);
-                }
-                champSD.start();
+
+                    splash.play(splashID, 1, 1, 1, 0, 1);
+                    String champStr = champdrop.getSelectedItem().toString();
+                    AnimationDrawable champAnimation = new AnimationDrawable();
+                    champAnimation.setOneShot(true);
+                    AnimationDrawable keyStoneAnimation = new AnimationDrawable();
+                    keyStoneAnimation.setOneShot(true);
+
+                    AnimationDrawable spell1Animation = new AnimationDrawable();
+                    spell1Animation.setOneShot(true);
+                    AnimationDrawable spell2Animation = new AnimationDrawable();
+                    spell2Animation.setOneShot(true);
 
 
-                champSD.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        generate.setEnabled(true);
-                        mp.reset();
-                        champList.remove(index);
-                        champList.add(index, temp);
+                    if (champStr.equals("Random")) {
+                        index = 9;
+
+                        for (int d = 0; d < 10; d++) {
+                            champAnimation.addFrame(getResources().getDrawable
+                                    (champList.get(d).champIcon), 50);
+                        }  // champion icon anime
+                    } else {
+                        for (int i = 0; i < champList.size(); i++) {
+                            if (champList.get(i).name.equals(champStr)) {
+                                index = i;
+
+                                champAnimation.addFrame(getResources().getDrawable
+                                        (champList.get(index).champIcon), 50);
+
+                            }
+                        }
                     }
-                });
+                    //keystone Animation
+                    for (int i = 0; i < KeyStoneList.size(); i++) {
+                        keyStoneAnimation.addFrame(getResources().getDrawable(KeyStoneList.get(i).
+                                getKeyStone()), 100);
+                    }
 
-
-                view1.setBackgroundColor(Color.rgb(0, 0, 0));
-                view2.setBackgroundColor(Color.rgb(0, 0, 0));
-                view3.setBackgroundColor(Color.rgb(0, 0, 0));
-                view4.setBackgroundColor(Color.rgb(0, 0, 0));
-                view5.setBackgroundColor(Color.rgb(0, 0, 0));
-                view6.setBackgroundColor(Color.rgb(0, 0, 0));
-                keyStoneView.setBackgroundColor(Color.rgb(0, 0, 0));
-                sspell1View.setBackgroundColor(Color.rgb(0, 0, 0));
-                sspell2View.setBackgroundColor(Color.rgb(0, 0, 0));
-
-
-
-                AnimationDrawable bootsAnimation = new AnimationDrawable();
-                bootsAnimation.setOneShot(true);
-                Collections.shuffle(bootsList);
-
-                AnimationDrawable iconsAnimation = new AnimationDrawable();
-                iconsAnimation.setOneShot(true);
-
-                AnimationDrawable icon3Animation = new AnimationDrawable();
-                icon3Animation.setOneShot(true);
-
-                AnimationDrawable icon4Animation = new AnimationDrawable();
-                icon4Animation.setOneShot(true);
-
-                AnimationDrawable icon5Animation = new AnimationDrawable();
-                icon5Animation.setOneShot(true);
-
-                AnimationDrawable icon6Animation = new AnimationDrawable();
-                icon6Animation.setOneShot(true);
-
-
-                if (checked) {
-
-                    if (champ.champIcon == R.drawable.cassiopia) {  //checked cassiopia
-                        setrangeItemList();
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 5; i++) {
-                            bootsAnimation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100); // first item
+                    //spell 1+2 animation
+                    Spell spelltemp = null, spelltemp2 = null;
+                    if (checked) {
+                        spell1Animation.addFrame(getResources().getDrawable(R.drawable.smite), 150);
+                        spelltemp = new Spell(R.drawable.smite, "Smite");
+                        for (int i = 0; i < SpellList.size(); i++) {
+                            if (SpellList.get(i).getSpell() != R.drawable.smite) {
+                                spell2Animation.addFrame(getResources().getDrawable(SpellList.get(i).getSpell()), 250);
+                                spelltemp2 = SpellList.get(i);
+                            }
                         }
 
-                        rangeItemList.remove(4);
+                    } else {
 
-
-                        Collections.shuffle(jgList);
-                        for (int i = 0; i < 10; i++) {
-                            iconsAnimation.addFrame(getResources().getDrawable(jgList.get(i)), 100); // second item(jg)
-                        }
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 15; i++) {
-                            icon3Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100); //third slot
+                        for (int i = 0; i < SpellList.size(); i++) {
+                            if (SpellList.get(i).getSpell() != R.drawable.smite) {
+                                spell2Animation.addFrame(getResources().getDrawable(SpellList.get(i).getSpell()), 150);
+                                spelltemp2 = SpellList.get(i);
+                            }
                         }
 
-                        rangeItemList.remove(14);
-
-
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 20; i++) {
-                            icon4Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//forth slot
+                        for (int i = 0; i < SpellList.size(); i++) {
+                            if (SpellList.get(i) != spelltemp2
+                                    && (SpellList.get(i).getSpell() != R.drawable.smite)) {
+                                spell1Animation.addFrame(getResources().getDrawable(SpellList.get(i).getSpell()), 250);
+                                spelltemp = SpellList.get(i);
+                            }
                         }
-
-                        rangeItemList.remove(19);
-
-
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 25; i++) {
-                            icon5Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//fifth slot
-                        }
-
-                        rangeItemList.remove(24);
-
-
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 30; i++) {
-                            icon6Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);
-                        }
-
-                        rangeItemList.remove(29);
-
-                        // icon is not cassipoia (checked)
-                    } else if (rangeList.contains(champ) && champ.champIcon != R.drawable.cassiopia) {  //non-cass range champ(jg)
-                        Collections.shuffle(bootsList);
-                        for (int i = 0; i < 5; i++) {
-                            bootsAnimation.addFrame(getResources().getDrawable(bootsList.get(i)), 100);
-                        }
-
-                        Collections.shuffle(jgList);
-                        for (int i = 0; i < 10; i++) {
-                            iconsAnimation.addFrame(getResources().getDrawable(jgList.get(i)), 100);
-                        }
-
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 15; i++) {
-                            icon3Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100); //third slot
-                        }
-
-                        rangeItemList.remove(14);
-
-
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 20; i++) {
-                            icon4Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//forth slot
-                        }
-
-                        rangeItemList.remove(19);
-
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 25; i++) {
-                            icon5Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//fifth slot
-                        }
-
-                        rangeItemList.remove(24);
-
-
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 30; i++) {
-                            icon6Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//sisth slot
-                        }
-
-                        rangeItemList.remove(29);
-
-
-                    } else if (meleeList.contains(champ)) {
-                        Collections.shuffle(bootsList);
-                        for (int i = 0; i < 5; i++) {
-                            bootsAnimation.addFrame(getResources().getDrawable(bootsList.get(i)), 100);
-                        }
-                        Collections.shuffle(jgList);
-                        for (int i = 0; i < 10; i++) {
-                            iconsAnimation.addFrame(getResources().getDrawable(jgList.get(i)), 100);
-                        }
-                        Collections.shuffle(meleeItemList);
-                        for (int i = 0; i < 15; i++) {
-                            icon3Animation.addFrame((getResources().getDrawable(meleeItemList.get(i))), 100);
-                        }
-                        meleeItemList.remove(14);
-
-
-                        Collections.shuffle(meleeItemList);
-                        for (int i = 0; i < 20; i++) {
-                            icon4Animation.addFrame((getResources().getDrawable(meleeItemList.get(i))), 100);
-                        }
-
-                        meleeItemList.remove(19);
-
-                        Collections.shuffle(meleeItemList);
-                        for (int i = 0; i < 25; i++) {
-                            icon5Animation.addFrame((getResources().getDrawable(meleeItemList.get(i))), 100);
-                        }
-
-                        meleeItemList.remove(24);
-
-                        Collections.shuffle(meleeItemList);
-                        for (int i = 0; i < 30; i++) {
-                            icon6Animation.addFrame((getResources().getDrawable(meleeItemList.get(i))), 100);
-                        }
-
-                        meleeItemList.remove(29);
-
-
-                    } else if (bothList.contains(champ)) {
-                        Collections.shuffle(bootsList);
-                        for (int i = 0; i < 5; i++) {
-                            bootsAnimation.addFrame(getResources().getDrawable(bootsList.get(i)), 100);
-                        }
-                        Collections.shuffle(jgList);
-                        for (int i = 0; i < 10; i++) {
-                            iconsAnimation.addFrame(getResources().getDrawable(jgList.get(i)), 100);
-                        }
-                        Collections.shuffle(nonjgItemList);
-                        for (int i = 0; i < 15; i++) {
-                            icon3Animation.addFrame((getResources().getDrawable(nonjgItemList.get(i))), 100);
-                        }
-
-                        nonjgItemList.remove(14);
-
-
-                        Collections.shuffle(nonjgItemList);
-                        for (int i = 0; i < 20; i++) {
-                            icon4Animation.addFrame((getResources().getDrawable(nonjgItemList.get(i))), 100);
-                        }
-
-                        nonjgItemList.remove(19);
-
-
-                        Collections.shuffle(nonjgItemList);
-                        for (int i = 0; i < 25; i++) {
-                            icon5Animation.addFrame((getResources().getDrawable(nonjgItemList.get(i))), 100);
-                        }
-
-                        nonjgItemList.remove(24);
-
-
-                        Collections.shuffle(nonjgItemList);
-                        for (int i = 0; i < 30; i++) {
-                            icon6Animation.addFrame((getResources().getDrawable(nonjgItemList.get(i))), 100);
-                        }
-
-                        nonjgItemList.remove(29);
 
                     }
+
+                    final Spell spell1 = spelltemp;
+                    final Spell spell2 = spelltemp2;
+
+                    Champ champ = new Champ(champList.get(index).champIcon, champList.get(index)
+                            .champSound, champList.get(index).name, champList.get(index).role);
+
+
+                    final Champ temp = champ;
+
+
+                    champSD = MediaPlayer.create(Main2Activity.this, champ.champSound);
+                    if (MainActivity.toggle.isChecked()) {
+                        champSD.setVolume(0, 0);
+                        ;
+                    } else {
+                        champSD.setVolume(1, 1);
+                    }
+                    champSD.start();
+
+
+                    champSD.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            generate.setEnabled(true);
+                            mp.reset();
+                            champList.remove(index);
+                            champList.add(index, temp);
+                        }
+                    });
+
+
+                    view1.setBackgroundColor(Color.rgb(0, 0, 0));
+                    view2.setBackgroundColor(Color.rgb(0, 0, 0));
+                    view3.setBackgroundColor(Color.rgb(0, 0, 0));
+                    view4.setBackgroundColor(Color.rgb(0, 0, 0));
+                    view5.setBackgroundColor(Color.rgb(0, 0, 0));
+                    view6.setBackgroundColor(Color.rgb(0, 0, 0));
+                    keyStoneView.setBackgroundColor(Color.rgb(0, 0, 0));
+                    sspell1View.setBackgroundColor(Color.rgb(0, 0, 0));
+                    sspell2View.setBackgroundColor(Color.rgb(0, 0, 0));
+
+
+                    AnimationDrawable bootsAnimation = new AnimationDrawable();
+                    bootsAnimation.setOneShot(true);
+                    Collections.shuffle(bootsList);
+
+                    AnimationDrawable iconsAnimation = new AnimationDrawable();
+                    iconsAnimation.setOneShot(true);
+
+                    AnimationDrawable icon3Animation = new AnimationDrawable();
+                    icon3Animation.setOneShot(true);
+
+                    AnimationDrawable icon4Animation = new AnimationDrawable();
+                    icon4Animation.setOneShot(true);
+
+                    AnimationDrawable icon5Animation = new AnimationDrawable();
+                    icon5Animation.setOneShot(true);
+
+                    AnimationDrawable icon6Animation = new AnimationDrawable();
+                    icon6Animation.setOneShot(true);
+
+
+                    if (checked) {
+
+                        if (champ.champIcon == R.drawable.cassiopia) {  //checked cassiopia
+                            setrangeItemList();
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 5; i++) {
+                                bootsAnimation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100); // first item
+                            }
+
+                            rangeItemList.remove(4);
+
+
+                            Collections.shuffle(jgList);
+                            for (int i = 0; i < 10; i++) {
+                                iconsAnimation.addFrame(getResources().getDrawable(jgList.get(i)), 100); // second item(jg)
+                            }
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 15; i++) {
+                                icon3Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100); //third slot
+                            }
+
+                            rangeItemList.remove(14);
+
+
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 20; i++) {
+                                icon4Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//forth slot
+                            }
+
+                            rangeItemList.remove(19);
+
+
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 25; i++) {
+                                icon5Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//fifth slot
+                            }
+
+                            rangeItemList.remove(24);
+
+
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 30; i++) {
+                                icon6Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);
+                            }
+
+                            rangeItemList.remove(29);
+
+                            // icon is not cassipoia (checked)
+                        } else if (rangeList.contains(champ) && champ.champIcon != R.drawable.cassiopia) {  //non-cass range champ(jg)
+                            Collections.shuffle(bootsList);
+                            for (int i = 0; i < 5; i++) {
+                                bootsAnimation.addFrame(getResources().getDrawable(bootsList.get(i)), 100);
+                            }
+
+                            Collections.shuffle(jgList);
+                            for (int i = 0; i < 10; i++) {
+                                iconsAnimation.addFrame(getResources().getDrawable(jgList.get(i)), 100);
+                            }
+
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 15; i++) {
+                                icon3Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100); //third slot
+                            }
+
+                            rangeItemList.remove(14);
+
+
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 20; i++) {
+                                icon4Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//forth slot
+                            }
+
+                            rangeItemList.remove(19);
+
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 25; i++) {
+                                icon5Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//fifth slot
+                            }
+
+                            rangeItemList.remove(24);
+
+
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 30; i++) {
+                                icon6Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//sisth slot
+                            }
+
+                            rangeItemList.remove(29);
+
+
+                        } else if (meleeList.contains(champ)) {
+                            Collections.shuffle(bootsList);
+                            for (int i = 0; i < 5; i++) {
+                                bootsAnimation.addFrame(getResources().getDrawable(bootsList.get(i)), 100);
+                            }
+                            Collections.shuffle(jgList);
+                            for (int i = 0; i < 10; i++) {
+                                iconsAnimation.addFrame(getResources().getDrawable(jgList.get(i)), 100);
+                            }
+                            Collections.shuffle(meleeItemList);
+                            for (int i = 0; i < 15; i++) {
+                                icon3Animation.addFrame((getResources().getDrawable(meleeItemList.get(i))), 100);
+                            }
+                            meleeItemList.remove(14);
+
+
+                            Collections.shuffle(meleeItemList);
+                            for (int i = 0; i < 20; i++) {
+                                icon4Animation.addFrame((getResources().getDrawable(meleeItemList.get(i))), 100);
+                            }
+
+                            meleeItemList.remove(19);
+
+                            Collections.shuffle(meleeItemList);
+                            for (int i = 0; i < 25; i++) {
+                                icon5Animation.addFrame((getResources().getDrawable(meleeItemList.get(i))), 100);
+                            }
+
+                            meleeItemList.remove(24);
+
+                            Collections.shuffle(meleeItemList);
+                            for (int i = 0; i < 30; i++) {
+                                icon6Animation.addFrame((getResources().getDrawable(meleeItemList.get(i))), 100);
+                            }
+
+                            meleeItemList.remove(29);
+
+
+                        } else if (bothList.contains(champ)) {
+                            Collections.shuffle(bootsList);
+                            for (int i = 0; i < 5; i++) {
+                                bootsAnimation.addFrame(getResources().getDrawable(bootsList.get(i)), 100);
+                            }
+                            Collections.shuffle(jgList);
+                            for (int i = 0; i < 10; i++) {
+                                iconsAnimation.addFrame(getResources().getDrawable(jgList.get(i)), 100);
+                            }
+                            Collections.shuffle(nonjgItemList);
+                            for (int i = 0; i < 15; i++) {
+                                icon3Animation.addFrame((getResources().getDrawable(nonjgItemList.get(i))), 100);
+                            }
+
+                            nonjgItemList.remove(14);
+
+
+                            Collections.shuffle(nonjgItemList);
+                            for (int i = 0; i < 20; i++) {
+                                icon4Animation.addFrame((getResources().getDrawable(nonjgItemList.get(i))), 100);
+                            }
+
+                            nonjgItemList.remove(19);
+
+
+                            Collections.shuffle(nonjgItemList);
+                            for (int i = 0; i < 25; i++) {
+                                icon5Animation.addFrame((getResources().getDrawable(nonjgItemList.get(i))), 100);
+                            }
+
+                            nonjgItemList.remove(24);
+
+
+                            Collections.shuffle(nonjgItemList);
+                            for (int i = 0; i < 30; i++) {
+                                icon6Animation.addFrame((getResources().getDrawable(nonjgItemList.get(i))), 100);
+                            }
+
+                            nonjgItemList.remove(29);
+
+                        }
 /**********************************************************************/
 
-                } else { //checkbox unchecked condition
-                    if (champ.champIcon == R.drawable.cassiopia) {  //unchecked cassiopia
-                        setrangeItemList();
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 5; i++) {
-                            bootsAnimation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100); // first item
+                    } else { //checkbox unchecked condition
+                        if (champ.champIcon == R.drawable.cassiopia) {  //unchecked cassiopia
+                            setrangeItemList();
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 5; i++) {
+                                bootsAnimation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100); // first item
+                            }
+
+                            rangeItemList.remove(4);
+
+
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 10; i++) {
+                                iconsAnimation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100); // second item()
+                            }
+                            rangeItemList.remove(9);
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 15; i++) {
+                                icon3Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100); //third slot
+                            }
+
+                            rangeItemList.remove(14);
+
+
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 20; i++) {
+                                icon4Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//forth slot
+                            }
+
+                            rangeItemList.remove(19);
+
+
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 25; i++) {
+                                icon5Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//fifth slot
+                            }
+
+                            rangeItemList.remove(24);
+
+
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 30; i++) {
+                                icon6Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);
+                            }
+
+                            rangeItemList.remove(29);
+
+                            // icon is not cassipoia (unchecked)
+                        } else if (rangeList.contains(champ) && champ.champIcon != R.drawable.cassiopia) {  //non-cass range champ(jg)
+                            Collections.shuffle(bootsList);
+                            for (int i = 0; i < 5; i++) {
+                                bootsAnimation.addFrame(getResources().getDrawable(bootsList.get(i)), 100);
+                            }
+
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 10; i++) {
+                                iconsAnimation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);
+                            }
+                            rangeItemList.remove(9);
+
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 15; i++) {
+                                icon3Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100); //third slot
+                            }
+
+                            rangeItemList.remove(14);
+
+
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 20; i++) {
+                                icon4Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//forth slot
+                            }
+
+                            rangeItemList.remove(19);
+
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 25; i++) {
+                                icon5Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//fifth slot
+                            }
+
+                            rangeItemList.remove(24);
+
+
+                            Collections.shuffle(rangeItemList);
+                            for (int i = 0; i < 30; i++) {
+                                icon6Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//sisth slot
+                            }
+
+                            rangeItemList.remove(29);
+
+
+                        } else if (meleeList.contains(champ)) {
+                            Collections.shuffle(bootsList);
+                            for (int i = 0; i < 5; i++) {
+                                bootsAnimation.addFrame(getResources().getDrawable(bootsList.get(i)), 100);
+                            }
+                            Collections.shuffle(meleeItemList);
+                            for (int i = 0; i < 10; i++) {
+                                iconsAnimation.addFrame(getResources().getDrawable(meleeItemList.get(i)), 100);
+                            }
+                            meleeItemList.remove(9);
+                            Collections.shuffle(meleeItemList);
+                            for (int i = 0; i < 15; i++) {
+                                icon3Animation.addFrame((getResources().getDrawable(meleeItemList.get(i))), 100);
+                            }
+                            meleeItemList.remove(14);
+
+
+                            Collections.shuffle(meleeItemList);
+                            for (int i = 0; i < 20; i++) {
+                                icon4Animation.addFrame((getResources().getDrawable(meleeItemList.get(i))), 100);
+                            }
+
+                            meleeItemList.remove(19);
+
+                            Collections.shuffle(meleeItemList);
+                            for (int i = 0; i < 25; i++) {
+                                icon5Animation.addFrame((getResources().getDrawable(meleeItemList.get(i))), 100);
+                            }
+
+                            meleeItemList.remove(24);
+
+                            Collections.shuffle(meleeItemList);
+                            for (int i = 0; i < 30; i++) {
+                                icon6Animation.addFrame((getResources().getDrawable(meleeItemList.get(i))), 100);
+                            }
+
+                            meleeItemList.remove(29);
+
+
+                        } else if (bothList.contains(champ)) {
+                            Collections.shuffle(bootsList);
+                            for (int i = 0; i < 5; i++) {
+                                bootsAnimation.addFrame(getResources().getDrawable(bootsList.get(i)), 100);
+                            }
+                            Collections.shuffle(nonjgItemList);
+                            for (int i = 0; i < 10; i++) {
+                                iconsAnimation.addFrame(getResources().getDrawable(nonjgItemList.get(i)), 100);
+                            }
+                            nonjgItemList.remove(9);
+                            Collections.shuffle(nonjgItemList);
+                            for (int i = 0; i < 15; i++) {
+                                icon3Animation.addFrame((getResources().getDrawable(nonjgItemList.get(i))), 100);
+                            }
+
+                            nonjgItemList.remove(14);
+
+
+                            Collections.shuffle(nonjgItemList);
+                            for (int i = 0; i < 20; i++) {
+                                icon4Animation.addFrame((getResources().getDrawable(nonjgItemList.get(i))), 100);
+                            }
+
+                            nonjgItemList.remove(19);
+
+
+                            Collections.shuffle(nonjgItemList);
+                            for (int i = 0; i < 25; i++) {
+                                icon5Animation.addFrame((getResources().getDrawable(nonjgItemList.get(i))), 100);
+                            }
+
+                            nonjgItemList.remove(24);
+
+
+                            Collections.shuffle(nonjgItemList);
+                            for (int i = 0; i < 30; i++) {
+                                icon6Animation.addFrame((getResources().getDrawable(nonjgItemList.get(i))), 100);
+                            }
+
+                            nonjgItemList.remove(29);
                         }
-
-                        rangeItemList.remove(4);
-
-
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 10; i++) {
-                            iconsAnimation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100); // second item()
-                        }
-                        rangeItemList.remove(9);
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 15; i++) {
-                            icon3Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100); //third slot
-                        }
-
-                        rangeItemList.remove(14);
-
-
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 20; i++) {
-                            icon4Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//forth slot
-                        }
-
-                        rangeItemList.remove(19);
-
-
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 25; i++) {
-                            icon5Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//fifth slot
-                        }
-
-                        rangeItemList.remove(24);
-
-
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 30; i++) {
-                            icon6Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);
-                        }
-
-                        rangeItemList.remove(29);
-
-                        // icon is not cassipoia (unchecked)
-                    } else if (rangeList.contains(champ) && champ.champIcon != R.drawable.cassiopia) {  //non-cass range champ(jg)
-                        Collections.shuffle(bootsList);
-                        for (int i = 0; i < 5; i++) {
-                            bootsAnimation.addFrame(getResources().getDrawable(bootsList.get(i)), 100);
-                        }
-
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 10; i++) {
-                            iconsAnimation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);
-                        }
-                        rangeItemList.remove(9);
-
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 15; i++) {
-                            icon3Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100); //third slot
-                        }
-
-                        rangeItemList.remove(14);
-
-
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 20; i++) {
-                            icon4Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//forth slot
-                        }
-
-                        rangeItemList.remove(19);
-
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 25; i++) {
-                            icon5Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//fifth slot
-                        }
-
-                        rangeItemList.remove(24);
-
-
-                        Collections.shuffle(rangeItemList);
-                        for (int i = 0; i < 30; i++) {
-                            icon6Animation.addFrame(getResources().getDrawable(rangeItemList.get(i)), 100);//sisth slot
-                        }
-
-                        rangeItemList.remove(29);
-
-
-                    } else if (meleeList.contains(champ)) {
-                        Collections.shuffle(bootsList);
-                        for (int i = 0; i < 5; i++) {
-                            bootsAnimation.addFrame(getResources().getDrawable(bootsList.get(i)), 100);
-                        }
-                        Collections.shuffle(meleeItemList);
-                        for (int i = 0; i < 10; i++) {
-                            iconsAnimation.addFrame(getResources().getDrawable(meleeItemList.get(i)), 100);
-                        }
-                        meleeItemList.remove(9);
-                        Collections.shuffle(meleeItemList);
-                        for (int i = 0; i < 15; i++) {
-                            icon3Animation.addFrame((getResources().getDrawable(meleeItemList.get(i))), 100);
-                        }
-                        meleeItemList.remove(14);
-
-
-                        Collections.shuffle(meleeItemList);
-                        for (int i = 0; i < 20; i++) {
-                            icon4Animation.addFrame((getResources().getDrawable(meleeItemList.get(i))), 100);
-                        }
-
-                        meleeItemList.remove(19);
-
-                        Collections.shuffle(meleeItemList);
-                        for (int i = 0; i < 25; i++) {
-                            icon5Animation.addFrame((getResources().getDrawable(meleeItemList.get(i))), 100);
-                        }
-
-                        meleeItemList.remove(24);
-
-                        Collections.shuffle(meleeItemList);
-                        for (int i = 0; i < 30; i++) {
-                            icon6Animation.addFrame((getResources().getDrawable(meleeItemList.get(i))), 100);
-                        }
-
-                        meleeItemList.remove(29);
-
-
-                    } else if (bothList.contains(champ)) {
-                        Collections.shuffle(bootsList);
-                        for (int i = 0; i < 5; i++) {
-                            bootsAnimation.addFrame(getResources().getDrawable(bootsList.get(i)), 100);
-                        }
-                        Collections.shuffle(nonjgItemList);
-                        for (int i = 0; i < 10; i++) {
-                            iconsAnimation.addFrame(getResources().getDrawable(nonjgItemList.get(i)), 100);
-                        }
-                        nonjgItemList.remove(9);
-                        Collections.shuffle(nonjgItemList);
-                        for (int i = 0; i < 15; i++) {
-                            icon3Animation.addFrame((getResources().getDrawable(nonjgItemList.get(i))), 100);
-                        }
-
-                        nonjgItemList.remove(14);
-
-
-                        Collections.shuffle(nonjgItemList);
-                        for (int i = 0; i < 20; i++) {
-                            icon4Animation.addFrame((getResources().getDrawable(nonjgItemList.get(i))), 100);
-                        }
-
-                        nonjgItemList.remove(19);
-
-
-                        Collections.shuffle(nonjgItemList);
-                        for (int i = 0; i < 25; i++) {
-                            icon5Animation.addFrame((getResources().getDrawable(nonjgItemList.get(i))), 100);
-                        }
-
-                        nonjgItemList.remove(24);
-
-
-                        Collections.shuffle(nonjgItemList);
-                        for (int i = 0; i < 30; i++) {
-                            icon6Animation.addFrame((getResources().getDrawable(nonjgItemList.get(i))), 100);
-                        }
-
-                        nonjgItemList.remove(29);
                     }
+
+
+                    bootsAnimation.stop();
+                    view1.setImageDrawable(bootsAnimation);
+                    bootsAnimation.start();
+
+                    iconsAnimation.stop();
+                    view2.setImageDrawable(iconsAnimation);
+                    iconsAnimation.start();
+
+                    icon3Animation.stop();
+                    view3.setImageDrawable(icon3Animation);
+                    icon3Animation.start();
+
+                    icon4Animation.stop();
+                    view4.setImageDrawable(icon4Animation);
+                    icon4Animation.start();
+
+                    icon5Animation.stop();
+                    view5.setImageDrawable(icon5Animation);
+                    icon5Animation.start();
+
+                    icon6Animation.stop();
+                    view6.setImageDrawable(icon6Animation);
+                    icon6Animation.start();
+
+                    champAnimation.stop();
+                    view7.setImageDrawable(champAnimation);
+                    champAnimation.start();
+
+                    keyStoneAnimation.stop();
+                    keyStoneView.setImageDrawable(keyStoneAnimation);
+                    keyStoneAnimation.start();
+
+                    spell1Animation.stop();
+                    sspell1View.setImageDrawable(spell1Animation);
+                    spell1Animation.start();
+
+                    spell2Animation.stop();
+                    sspell2View.setImageDrawable(spell2Animation);
+                    spell2Animation.start();
+
+                    view7.setOnClickListener(new View.OnClickListener() {
+                        //two mediaplayer
+
+                        @Override
+                        public void onClick(View view) {
+                            Context context = getApplicationContext();
+                            CharSequence text = temp.name;
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+
+                        }
+                    });
+
+                    keyStoneView.setOnClickListener(new View.OnClickListener() {
+                        //two mediaplayer
+
+                        @Override
+                        public void onClick(View view) {
+                            Context context = getApplicationContext();
+                            CharSequence text = KeyStoneList.get(KeyStoneList.size() - 1).getKeyStoneName();
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+
+                        }
+                    });
+                    sspell1View.setOnClickListener(new View.OnClickListener() {
+                        //two mediaplayer
+
+                        @Override
+                        public void onClick(View view) {
+                            Context context = getApplicationContext();
+                            CharSequence text = spell1.getSpellName();
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+
+                        }
+                    });
+                    sspell2View.setOnClickListener(new View.OnClickListener() {
+                        //two mediaplayer
+
+                        @Override
+                        public void onClick(View view) {
+                            Context context = getApplicationContext();
+                            CharSequence text = spell2.getSpellName();
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+
+                        }
+                    });
+                    nonjgItemList.clear();
+                    meleeItemList.clear();
+                    rangeItemList.clear();
+                    new myAsyntask2().execute();
+
+
+                    if (champSD.isPlaying()) {
+                        generate.setEnabled(false);
+                    }
+
+
                 }
+            });
+        }
 
 
-                bootsAnimation.stop();
-                view1.setImageDrawable(bootsAnimation);
-                bootsAnimation.start();
-
-                iconsAnimation.stop();
-                view2.setImageDrawable(iconsAnimation);
-                iconsAnimation.start();
-
-                icon3Animation.stop();
-                view3.setImageDrawable(icon3Animation);
-                icon3Animation.start();
-
-                icon4Animation.stop();
-                view4.setImageDrawable(icon4Animation);
-                icon4Animation.start();
-
-                icon5Animation.stop();
-                view5.setImageDrawable(icon5Animation);
-                icon5Animation.start();
-
-                icon6Animation.stop();
-                view6.setImageDrawable(icon6Animation);
-                icon6Animation.start();
-
-                champAnimation.stop();
-                view7.setImageDrawable(champAnimation);
-                champAnimation.start();
-
-                keyStoneAnimation.stop();
-                keyStoneView.setImageDrawable(keyStoneAnimation);
-                keyStoneAnimation.start();
-
-                spell1Animation.stop();
-                sspell1View.setImageDrawable(spell1Animation);
-                spell1Animation.start();
-
-                spell2Animation.stop();
-                sspell2View.setImageDrawable(spell2Animation);
-                spell2Animation.start();
-
-                view7.setOnClickListener(new View.OnClickListener() {
-                    //two mediaplayer
-
-                    @Override
-                    public void onClick(View view) {
-                        Context context = getApplicationContext();
-                        CharSequence text = temp.name;
-                        int duration = Toast.LENGTH_SHORT;
-
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-
-                    }
-                });
-
-                keyStoneView.setOnClickListener(new View.OnClickListener() {
-                    //two mediaplayer
-
-                    @Override
-                    public void onClick(View view) {
-                        Context context = getApplicationContext();
-                        CharSequence text = KeyStoneList.get(KeyStoneList.size() - 1).getKeyStoneName();
-                        int duration = Toast.LENGTH_SHORT;
-
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-
-                    }
-                });
-                sspell1View.setOnClickListener(new View.OnClickListener() {
-                    //two mediaplayer
-
-                    @Override
-                    public void onClick(View view) {
-                        Context context = getApplicationContext();
-                        CharSequence text = spell1.getSpellName();
-                        int duration = Toast.LENGTH_SHORT;
-
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-
-                    }
-                });
-                sspell2View.setOnClickListener(new View.OnClickListener() {
-                    //two mediaplayer
-
-                    @Override
-                    public void onClick(View view) {
-                        Context context = getApplicationContext();
-                        CharSequence text = spell2.getSpellName();
-                        int duration = Toast.LENGTH_SHORT;
-
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-
-                    }
-                });
-                nonjgItemList.clear();
-                meleeItemList.clear();
-                rangeItemList.clear();
-                new myAsyntask2().execute();
 
 
-                if (champSD.isPlaying()) {
-                    generate.setEnabled(false);
-                }
-
-
-            }
-        });
-
-
-    }
 
 
     protected void setSplash() {
@@ -887,6 +895,7 @@ public class Main2Activity extends AppCompatActivity {
         meleeItemList.add(R.drawable.icon81);
         meleeItemList.add(R.drawable.icon82);
         meleeItemList.add(R.drawable.icon83);
+        meleeItemList.add(R.drawable.icon84);
     }
 
     protected void setrangeItemList() {
@@ -955,6 +964,7 @@ public class Main2Activity extends AppCompatActivity {
         rangeItemList.add(R.drawable.icon81);
         rangeItemList.add(R.drawable.icon82);
         rangeItemList.add(R.drawable.icon83);
+        rangeItemList.add(R.drawable.icon84);
     }
 
     protected void setnonjgItemList() {
@@ -1025,6 +1035,7 @@ public class Main2Activity extends AppCompatActivity {
         nonjgItemList.add(R.drawable.icon81);
         nonjgItemList.add(R.drawable.icon82);
         nonjgItemList.add(R.drawable.icon83);
+        nonjgItemList.add(R.drawable.icon84);
     }
 
 
@@ -1178,6 +1189,7 @@ public class Main2Activity extends AppCompatActivity {
         champList.add(new Champ(R.drawable.kassaidin, R.raw.kassadin, "Kassdin", "M"));
         champList.add(new Champ(R.drawable.katarina, R.raw.katarina, "Katarina", "M"));
         champList.add(new Champ(R.drawable.kayle, R.raw.kayle, "Kayle", "B"));
+        champList.add(new Champ(R.drawable.kayn,R.raw.kayn,"Kayn","M"));
         champList.add(new Champ(R.drawable.kennen, R.raw.kennen, "Kennen", "R"));
         champList.add(new Champ(R.drawable.kindred, R.raw.kindred, "Kindred", "R"));
         champList.add(new Champ(R.drawable.khazix, R.raw.khazix, "Khazix", "M"));
@@ -1239,7 +1251,7 @@ public class Main2Activity extends AppCompatActivity {
         champList.add(new Champ(R.drawable.tryndamare, R.raw.tryndamere, "Tryndamere", "M"));
         champList.add(new Champ(R.drawable.twistedfate, R.raw.twistedfate, "Twisted Fate", "R"));
         champList.add(new Champ(R.drawable.twitch, R.raw.twitch, "Twitch", "R"));
-        champList.add(new Champ(R.drawable.udyr, R.raw.udyr, "Udry", "M"));
+        champList.add(new Champ(R.drawable.udyr, R.raw.udyr, "Udyr", "M"));
         champList.add(new Champ(R.drawable.urgot, R.raw.urgot, "Urgot", "R"));
         champList.add(new Champ(R.drawable.varus, R.raw.varus, "Varus", "R"));
         champList.add(new Champ(R.drawable.vayne, R.raw.vayne, "Vayne", "R"));
